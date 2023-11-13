@@ -1,23 +1,23 @@
 [
   {
-    "objectID": "projects.html#project-2",
-    "href": "projects.html#project-2",
-    "title": "Projects",
-    "section": "Project 2",
-    "text": "Project 2"
+    "objectID": "projects.html#step-2-process-the-data",
+    "href": "projects.html#step-2-process-the-data",
+    "title": "Data analysis steps",
+    "section": "Step 2 (Process the data)",
+    "text": "Step 2 (Process the data)"
   },
   {
-    "objectID": "projects.html#project-3",
-    "href": "projects.html#project-3",
-    "title": "Projects",
-    "section": "Project 3",
-    "text": "Project 3"
+    "objectID": "projects.html#step-3-export-data-subsets",
+    "href": "projects.html#step-3-export-data-subsets",
+    "title": "Data analysis steps",
+    "section": "Step 3 (Export data subsets)",
+    "text": "Step 3 (Export data subsets)"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "About Me",
+    "title": "About",
     "section": "",
-    "text": "Thanks for checking out my web site!"
+    "text": "This web site contains information about the Australian Geoscape Geocoded National Address File (G-NAF).\n\nAttributions\nHome address icons created by Andrean Prabowo - Flaticon\n\n\n  \n\n\nThanks for checking out my web site!"
   }
 ]

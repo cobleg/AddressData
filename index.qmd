@@ -1,5 +1,5 @@
 ---
-title: "About Me"
+title: "About"
 about:
   id: me
   template: broadside
@@ -8,12 +8,10 @@ about:
 
 :::{#me}
 
-## Goals
+This web site contains information about the Australian [Geoscape Geocoded National Address File (G-NAF)](https://data.gov.au/data/dataset/geocoded-national-address-file-g-naf).
 
-## Education
-
-## Experience
-
+# Attributions
+<a href="https://www.flaticon.com/free-icons/home-address" title="home address icons">Home address icons created by Andrean Prabowo - Flaticon</a>
 :::
 
 Thanks for checking out my web site!

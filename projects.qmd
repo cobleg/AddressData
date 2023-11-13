@@ -1,9 +1,9 @@
 ---
-title: "Projects"
+title: "Data analysis steps"
 ---
 
-## Project 1
+## Step 1 (Import the data)
 
-## Project 2
+## Step 2 (Process the data)
 
-## Project 3
+## Step 3 (Export data subsets)

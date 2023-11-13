@@ -3,7 +3,7 @@ title: "Data analysis steps"
 ---
 
 ## Introduction
-This web site contains helpful information about processing the Geoscape G-NAF data set. This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to:
+This web site contains helpful information about processing Geoscape's Geocoded National Address File (G-NAF). This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to:
 - help emergency services locate building access points
 - validate addresses for online forms
 - infrastructure and land use planning.
@@ -29,7 +29,8 @@ library(here)
 library(tidyverse)
 
 df.0 <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "ACT_ADDRESS_ALIAS_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
-head(df)
+
+head(df.0)
 
 ```
 

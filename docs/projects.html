@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -106,9 +140,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#step-1-import-the-data" id="toc-step-1-import-the-data" class="nav-link active" data-scroll-target="#step-1-import-the-data">Step 1 (Import the data)</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#key-steps" id="toc-key-steps" class="nav-link" data-scroll-target="#key-steps">Key steps</a>
+  <ul class="collapse">
+  <li><a href="#step-1-import-the-data" id="toc-step-1-import-the-data" class="nav-link" data-scroll-target="#step-1-import-the-data">Step 1 (Import the data)</a></li>
   <li><a href="#step-2-process-the-data" id="toc-step-2-process-the-data" class="nav-link" data-scroll-target="#step-2-process-the-data">Step 2 (Process the data)</a></li>
   <li><a href="#step-3-export-data-subsets" id="toc-step-3-export-data-subsets" class="nav-link" data-scroll-target="#step-3-export-data-subsets">Step 3 (Export data subsets)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -132,16 +170,64 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="step-1-import-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-import-the-data">Step 1 (Import the data)</h2>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This web site contains helpful information about processing the Geoscape G-NAF data set. This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to: - help emergency services locate building access points - validate addresses for online forms - infrastructure and land use planning.</p>
+<p><a href="https://www.industry.gov.au/news/open-address-data-better-services">Click on this link for more information about the data set can be found here.</a></p>
+<p>Given the complexity of the G-NAF data, it can be tricky figuring out how to manipulate it. So this repository contains some worked examples using open source applications such as R.</p>
 </section>
-<section id="step-2-process-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-process-the-data">Step 2 (Process the data)</h2>
+<section id="key-steps" class="level2">
+<h2 class="anchored" data-anchor-id="key-steps">Key steps</h2>
+<section id="step-1-import-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-import-the-data">Step 1 (Import the data)</h3>
+<p>Download the data set, which is named <a href="https://data.gov.au/data/dataset/19432f89-dc3a-4ef3-b943-5326ef1dbecc/resource/28cf3c40-faa3-4802-9177-3ec9e9aa0a0f/download/g-naf_aug23_allstates_gda2020_psv_1012.zip">Aug 23 - Geoscape G-NAF - GDA2020</a>. Unzip and place in an R project file.</p>
+<p>Save in an R project data folder.</p>
+<p>Write a script to import the data, for example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective: import GNAF address data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Grant Coble-Neal</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dependencies: nil</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/COBLENG/Documents/R/AddressData</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"G-NAF"</span>, <span class="st">"G-NAF AUGUST 2023"</span>, <span class="st">"Standard"</span>, <span class="st">"ACT_ADDRESS_ALIAS_psv.psv"</span>), <span class="at">sep =</span> <span class="st">"|"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                              
+1 function (x, df1, df2, ncp, log = FALSE)    
+2 {                                           
+3     if (missing(ncp))                       
+4         .Call(C_df, x, df1, df2, log)       
+5     else .Call(C_dnf, x, df1, df2, ncp, log)
+6 }                                           </code></pre>
+</div>
+</div>
 </section>
-<section id="step-3-export-data-subsets" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-export-data-subsets">Step 3 (Export data subsets)</h2>
+<section id="step-2-process-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-process-the-data">Step 2 (Process the data)</h3>
+</section>
+<section id="step-3-export-data-subsets" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-export-data-subsets">Step 3 (Export data subsets)</h3>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

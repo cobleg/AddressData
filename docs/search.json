@@ -1,17 +1,24 @@
 [
   {
-    "objectID": "projects.html#step-2-process-the-data",
-    "href": "projects.html#step-2-process-the-data",
+    "objectID": "projects.html",
+    "href": "projects.html",
     "title": "Data analysis steps",
-    "section": "Step 2 (Process the data)",
-    "text": "Step 2 (Process the data)"
+    "section": "",
+    "text": "This web site contains helpful information about processing the Geoscape G-NAF data set. This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to: - help emergency services locate building access points - validate addresses for online forms - infrastructure and land use planning.\nClick on this link for more information about the data set can be found here.\nGiven the complexity of the G-NAF data, it can be tricky figuring out how to manipulate it. So this repository contains some worked examples using open source applications such as R."
   },
   {
-    "objectID": "projects.html#step-3-export-data-subsets",
-    "href": "projects.html#step-3-export-data-subsets",
+    "objectID": "projects.html#introduction",
+    "href": "projects.html#introduction",
     "title": "Data analysis steps",
-    "section": "Step 3 (Export data subsets)",
-    "text": "Step 3 (Export data subsets)"
+    "section": "",
+    "text": "This web site contains helpful information about processing the Geoscape G-NAF data set. This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to: - help emergency services locate building access points - validate addresses for online forms - infrastructure and land use planning.\nClick on this link for more information about the data set can be found here.\nGiven the complexity of the G-NAF data, it can be tricky figuring out how to manipulate it. So this repository contains some worked examples using open source applications such as R."
+  },
+  {
+    "objectID": "projects.html#key-steps",
+    "href": "projects.html#key-steps",
+    "title": "Data analysis steps",
+    "section": "Key steps",
+    "text": "Key steps\n\nStep 1 (Import the data)\nDownload the data set, which is named Aug 23 - Geoscape G-NAF - GDA2020. Unzip and place in an R project file.\nSave in an R project data folder.\nWrite a script to import the data, for example:\n\n# Objective: import GNAF address data\n# Author: Grant Coble-Neal\n# Dependencies: nil\n\nlibrary(here)\n\nhere() starts at C:/Users/COBLENG/Documents/R/AddressData\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.3     ✔ readr     2.1.4\n✔ forcats   1.0.0     ✔ stringr   1.5.0\n✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.0\n✔ purrr     1.0.2     \n\n\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ndf.0 &lt;- read.table(here(\"data\", \"G-NAF\", \"G-NAF AUGUST 2023\", \"Standard\", \"ACT_ADDRESS_ALIAS_psv.psv\"), sep = \"|\", header = TRUE, stringsAsFactors = FALSE)\nhead(df)\n\n                                              \n1 function (x, df1, df2, ncp, log = FALSE)    \n2 {                                           \n3     if (missing(ncp))                       \n4         .Call(C_df, x, df1, df2, log)       \n5     else .Call(C_dnf, x, df1, df2, ncp, log)\n6 }                                           \n\n\n\n\nStep 2 (Process the data)\n\n\nStep 3 (Export data subsets)"
   },
   {
     "objectID": "index.html",

@@ -2,8 +2,37 @@
 title: "Data analysis steps"
 ---
 
-## Step 1 (Import the data)
+## Introduction
+This web site contains helpful information about processing the Geoscape G-NAF data set. This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to:
+- help emergency services locate building access points
+- validate addresses for online forms
+- infrastructure and land use planning.
 
-## Step 2 (Process the data)
+[Click on this link for more information about the data set can be found here.](https://www.industry.gov.au/news/open-address-data-better-services)
 
-## Step 3 (Export data subsets)
+Given the complexity of the G-NAF data, it can be tricky figuring out how to manipulate it. So this repository contains some worked examples using open source applications such as R. 
+
+## Key steps
+### Step 1 (Import the data)
+Download the data set, which is named [Aug 23 - Geoscape G-NAF - GDA2020](https://data.gov.au/data/dataset/19432f89-dc3a-4ef3-b943-5326ef1dbecc/resource/28cf3c40-faa3-4802-9177-3ec9e9aa0a0f/download/g-naf_aug23_allstates_gda2020_psv_1012.zip). Unzip and place in an R project file.
+
+Save in an R project data folder.
+
+Write a script to import the data, for example:
+```{r}
+# Objective: import GNAF address data
+# Author: Grant Coble-Neal
+# Dependencies: nil
+
+library(here)
+
+library(tidyverse)
+
+df.0 <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "ACT_ADDRESS_ALIAS_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
+head(df)
+
+```
+
+### Step 2 (Process the data)
+
+### Step 3 (Export data subsets)

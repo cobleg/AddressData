@@ -8,8 +8,15 @@ format:
 ---
 
 ## Introduction
+<<<<<<< HEAD
 
 This web site contains helpful information about processing Geoscape's Geocoded National Address File (G-NAF). This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to: - help emergency services locate building access points - validate addresses for online forms - infrastructure and land use planning.
+=======
+This web site contains helpful information about processing Geoscape's Geocoded National Address File (G-NAF). This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to:
+- help emergency services locate building access points
+- validate addresses for online forms
+- infrastructure and land use planning.
+>>>>>>> 251007d250148e9e65d0017b3e65a5ee324751ab
 
 [Click on this link for more information about the data set can be found here.](https://www.industry.gov.au/news/open-address-data-better-services)
 
@@ -47,6 +54,11 @@ Write a script to import the data, for example:
 library(here)
 
 df.0 <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "ACT_ADDRESS_ALIAS_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
+<<<<<<< HEAD
+=======
+
+head(df.0)
+>>>>>>> 251007d250148e9e65d0017b3e65a5ee324751ab
 
 head(df.0)
 

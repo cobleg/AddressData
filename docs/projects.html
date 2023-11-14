@@ -239,6 +239,7 @@ nickname       Eye Holes                        </code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at C:/Users/COBLENG/Documents/R/AddressData</code></pre>
 </div>
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"G-NAF"</span>, <span class="st">"G-NAF AUGUST 2023"</span>, <span class="st">"Standard"</span>, <span class="st">"ACT_ADDRESS_ALIAS_psv.psv"</span>), <span class="at">sep =</span> <span class="st">"|"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df<span class="fl">.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -10545,6 +10546,41 @@ Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: 96.81695 ymin: -43.7405 xmax: 167.998 ymax: -9.142163
 Geodetic CRS:  GDA2020</code></pre>
+=======
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"G-NAF"</span>, <span class="st">"G-NAF AUGUST 2023"</span>, <span class="st">"Standard"</span>, <span class="st">"ACT_ADDRESS_ALIAS_psv.psv"</span>), <span class="at">sep =</span> <span class="st">"|"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df<span class="fl">.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ADDRESS_ALIAS_PID DATE_CREATED DATE_RETIRED  PRINCIPAL_PID      ALIAS_PID
+1          15024480   2018-07-27           NA GAACT714853934 GAACT714853933
+2          21500626   2021-08-01           NA GAACT714895624 GAACT715143249
+3          18834724   2020-04-23           NA GAACT715701568 GAACT715031088
+4          18834717   2020-04-23           NA GAACT715701575 GAACT715023132
+5          18834716   2020-04-23           NA GAACT715701596 GAACT715022550
+6          15025423   2018-07-27           NA GAACT715293845 GAACT718359326
+  ALIAS_TYPE_CODE ALIAS_COMMENT
+1             SYN            NA
+2             SYN            NA
+3             SYN            NA
+4             SYN            NA
+5             SYN            NA
+6             SYN            NA</code></pre>
+>>>>>>> 251007d250148e9e65d0017b3e65a5ee324751ab
 </div>
 </div>
 </section>

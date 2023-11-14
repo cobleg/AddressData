@@ -5,7 +5,10 @@
 /.quarto/
 *.psv
 *.sql
+<<<<<<< HEAD
 *.zip
 /data/MeshBlocks/
 Australia.zip
 *.pdf
+=======
+>>>>>>> 251007d250148e9e65d0017b3e65a5ee324751ab

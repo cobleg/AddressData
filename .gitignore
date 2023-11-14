@@ -2,5 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
-
 /.quarto/
+*.psv
+*.sql
+*.zip
+/data/MeshBlocks/
+Australia.zip
+*.pdf

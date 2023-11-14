@@ -1,24 +1,44 @@
 ---
 title: "Data analysis steps"
+bibliography: [C:/Users/COBLENG/Documents/Zotero/Bibliography.bib]
+link-citations: true
+format: 
+  html: 
+    page-layout: full
 ---
 
 ## Introduction
-This web site contains helpful information about processing the Geoscape G-NAF data set. This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to:
-- help emergency services locate building access points
-- validate addresses for online forms
-- infrastructure and land use planning.
+
+This web site contains helpful information about processing Geoscape's Geocoded National Address File (G-NAF). This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to: - help emergency services locate building access points - validate addresses for online forms - infrastructure and land use planning.
 
 [Click on this link for more information about the data set can be found here.](https://www.industry.gov.au/news/open-address-data-better-services)
 
-Given the complexity of the G-NAF data, it can be tricky figuring out how to manipulate it. So this repository contains some worked examples using open source applications such as R. 
+Given the complexity of the G-NAF data, it can be tricky figuring out how to manipulate it. So this repository contains some worked examples using open source applications such as R.
 
+Note that the following examples are executed in this version of R:
+
+```{r}
+print(version)
+```
+This web page was created on this date:
+
+```{r}
+Sys.Date()
+```
 ## Key steps
+
 ### Step 1 (Import the data)
+
 Download the data set, which is named [Aug 23 - Geoscape G-NAF - GDA2020](https://data.gov.au/data/dataset/19432f89-dc3a-4ef3-b943-5326ef1dbecc/resource/28cf3c40-faa3-4802-9177-3ec9e9aa0a0f/download/g-naf_aug23_allstates_gda2020_psv_1012.zip). Unzip and place in an R project file.
 
-Save in an R project data folder.
+Save in an R project data folder. Note that the data will be saved in a folder several layers deep.
+
+```{r}
+here::here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard")
+```
 
 Write a script to import the data, for example:
+
 ```{r}
 # Objective: import GNAF address data
 # Author: Grant Coble-Neal
@@ -26,13 +46,135 @@ Write a script to import the data, for example:
 
 library(here)
 
-library(tidyverse)
-
 df.0 <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "ACT_ADDRESS_ALIAS_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
-head(df)
+
+head(df.0)
 
 ```
 
+Each address record has a latitude and a longitude. The next code chunk selects the geocoded address data for the Australian Capital Territory (ACT). Being a relatively small area, the ACT is a good example to illustrate the process here.
+
+```{r}
+ACT.point <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "ACT_LOCALITY_POINT_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
+
+head(ACT.point)
+```
+
+
+The question is; what to do with these data? One idea, particularly relevant to infrastructure planning is to map the address data for a specific area and see what spatial patterns it presents. For example, how densely populated is a given region? In many parts of Australia, the population density is very low.
+
+This can be seen by visualising mesh block data available from the Australian Population and Housing Census. [@MeshBlocksAustralian2021]
+
+Let's get the mesh block data for Australia. First, check the URL for the mesh block shapefiles. [Click on this link to find the relevant web page](https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files). Then right-mouse-button-click on the Download ZIP link as shown in figure 1.
+
+:::{#fig-MB_download}
+
+![](img/ABS Mesh Block Shapefile Download Link.png)
+:::
+
+Paste the copied link in the code chunk below, replacing the existing link.
+```{r}
+MB.URL <-c("https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files/MB_2021_AUST_SHP_GDA2020.zip")
+```
+
+Then run the next code chunk to download and unzip the files, placing the files in a subdirectory named: MeshBlocks.
+
+``` {r}
+dir.create(here("data", "MeshBlocks"), showWarnings = FALSE) # create a sub folder in the data directory
+
+# Uncomment and run the next two lines:
+# download.file(MB.URL, destfile = 'census_MB.zip')
+# unzip(zipfile = 'census_MB.zip', exdir = here::here('data', 'MeshBlocks'))
+
+```
+
+The next code chunk will load the G-NAF mesh block data file.
+
+```{r}
+df.meshblock.address.WA <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "WA_ADDRESS_MESH_BLOCK_2021_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
+
+head(df.meshblock.address.WA)
+```
+
+For context, it would be useful to also have the map of Australia. Let's get that too.
+
+``` {r}
+URL.Australia <- c("https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files/AUS_2021_AUST_SHP_GDA2020.zip")
+download.file(URL.Australia, destfile = 'Australia.zip')
+unzip(zipfile = 'Australia.zip', exdir = here('data'))
+
+Aust <- sf::st_read(here("data", "AUS_2021_AUST_GDA2020.shp"))
+```
+
 ### Step 2 (Process the data)
+
+The first processing step is visualising the recevied data. Let's create a map of Australia first and build up each layer as we get more specific.
+
+#### Map of Australia
+
+``` {r}
+
+library(ggplot2)
+library(sf)
+
+Aust.map <- ggplot() +
+  geom_sf(data = Aust, size = 1.5, colour ="black") +
+  coord_sf() +
+  theme_bw()
+
+ggsave(file = here("img", "Aust_map.png"), device = "png" )
+```
+
+
+The map should look like this.
+
+:::{fig-Map_Australia}
+![](img/Aust_map.png)
+:::
+
+#### Add a the East Pilbara mesh block boundaries to the map
+Now add the mesh block data. Given the mesh block file is very large, it is sensible to first select a subset of the data. This example selects the region named: East Pilbara.
+
+```{r}
+MB <- sf::st_read(here("data", "MeshBlocks", "MB_2021_AUST_GDA2020.shp"))
+EastPilbara <- MB %>% dplyr::filter(
+  SA2_NAME21 == "East Pilbara"
+)
+
+```
+
+Now the East Pilbara mesh block layer can be added to the map of Australia
+
+```{r}
+ggplot2::ggplot() +
+  geom_sf(data = Aust, size = 1.5, colour ="black") +
+  geom_sf(data = EastPilbara, size = 1.5, colour ="white", fill = 'blue') +
+  coord_sf() +
+  theme_bw() +
+  ggtitle("East Pilbara")
+
+ggsave(file = here("img", "EastPilbara_map.png"), device = "png" )
+```
+
+:::{fig-Map_Australia}
+![](img/EastPilbara_map.png) 
+:::
+
+#### Create a geopoint map of the ACT
+An API call to Google Maps can be made to create a base map, which provides context for the G-NAF geocoded address data. This next code chunk displays the G-NAF address data across the ACT. The 'make_bbox' function in the R library ggmap is used to set the zoom level. 
+
+Note that a valid Google Maps API key is required to successfully execute this example.
+
+```{r}
+
+library(ggmap)
+
+box <- ggmap::make_bbox(lon = LONGITUDE, lat = LATITUDE, data = ACT.point)
+calc_zoom(box)
+
+qmap('canberra', zoom = calc_zoom(box), maptype='roadmap') +
+  geom_point(aes(x = LONGITUDE, y = LATITUDE), data = ACT.point,
+             colour = 'red', fill = 'black', alpha = 0.4, size = 0.5) 
+```
 
 ### Step 3 (Export data subsets)

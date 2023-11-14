@@ -8,15 +8,11 @@ format:
 ---
 
 ## Introduction
-<<<<<<< HEAD
 
-This web site contains helpful information about processing Geoscape's Geocoded National Address File (G-NAF). This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to: - help emergency services locate building access points - validate addresses for online forms - infrastructure and land use planning.
-=======
 This web site contains helpful information about processing Geoscape's Geocoded National Address File (G-NAF). This is a spatial data set containing 15 million physical addresses. This is an open data set that is used to:
 - help emergency services locate building access points
 - validate addresses for online forms
 - infrastructure and land use planning.
->>>>>>> 251007d250148e9e65d0017b3e65a5ee324751ab
 
 [Click on this link for more information about the data set can be found here.](https://www.industry.gov.au/news/open-address-data-better-services)
 
@@ -54,11 +50,6 @@ Write a script to import the data, for example:
 library(here)
 
 df.0 <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "ACT_ADDRESS_ALIAS_psv.psv"), sep = "|", header = TRUE, stringsAsFactors = FALSE)
-<<<<<<< HEAD
-=======
-
-head(df.0)
->>>>>>> 251007d250148e9e65d0017b3e65a5ee324751ab
 
 head(df.0)
 
@@ -71,7 +62,6 @@ ACT.point <- read.table(here("data", "G-NAF", "G-NAF AUGUST 2023", "Standard", "
 
 head(ACT.point)
 ```
-
 
 The question is; what to do with these data? One idea, particularly relevant to infrastructure planning is to map the address data for a specific area and see what spatial patterns it presents. For example, how densely populated is a given region? In many parts of Australia, the population density is very low.
 
@@ -133,16 +123,9 @@ Aust.map <- ggplot() +
   geom_sf(data = Aust, size = 1.5, colour ="black") +
   coord_sf() +
   theme_bw()
-
+Aust.map
 ggsave(file = here("img", "Aust_map.png"), device = "png" )
 ```
-
-
-The map should look like this.
-
-:::{fig-Map_Australia}
-![](img/Aust_map.png)
-:::
 
 #### Add a the East Pilbara mesh block boundaries to the map
 Now add the mesh block data. Given the mesh block file is very large, it is sensible to first select a subset of the data. This example selects the region named: East Pilbara.
@@ -167,10 +150,6 @@ ggplot2::ggplot() +
 
 ggsave(file = here("img", "EastPilbara_map.png"), device = "png" )
 ```
-
-:::{fig-Map_Australia}
-![](img/EastPilbara_map.png) 
-:::
 
 #### Create a geopoint map of the ACT
 An API call to Google Maps can be made to create a base map, which provides context for the G-NAF geocoded address data. This next code chunk displays the G-NAF address data across the ACT. The 'make_bbox' function in the R library ggmap is used to set the zoom level. 

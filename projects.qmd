@@ -169,3 +169,34 @@ qmap('canberra', zoom = calc_zoom(box), maptype='roadmap') +
 ```
 
 ### Step 3 (Export data subsets)
+Sometimes it is necessary to export the analytical data sets created in a workflow to another application. For spatial data, shapefiles represent a data format that is portable and practical. For example, many application that analyze or visualize spatial data are capable of importing shapefiles.
+
+The following code chunk provides an example using the East Pilbara data set.
+
+```{r}
+# Objective: export Shapefiles
+# Author: Grant Coble-Neal
+
+library(here)
+library(sf)
+library(tidyverse)
+
+MB <- st_read(here("data", "MeshBlocks", "MB_2021_AUST_GDA2020.shp"))
+EastPilbara <- MB %>% filter(
+  SA2_NAME21 == "East Pilbara"
+)
+
+st_write(EastPilbara, here("data", "EastPilbara.shp"))
+```
+
+The result are four files saved in the 'data' subdirectory named:
+- EastPilbara.dbf
+- EastPilbara.prj
+- EastPilbara.shp
+- EastPilbara.shx
+
+These are required to import the data into another spatial analysis application.
+
+```{r}
+list.files(here("data"))
+```

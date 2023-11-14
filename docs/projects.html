@@ -445,14 +445,74 @@ Geodetic CRS:  GDA2020</code></pre>
 </section>
 </section>
 <section id="step-3-export-data-subsets" class="level3">
-
+<h3 class="anchored" data-anchor-id="step-3-export-data-subsets">Step 3 (Export data subsets)</h3>
+<p>Sometimes it is necessary to export the analytical data sets created in a workflow to another application. For spatial data, shapefiles represent a data format that is portable and practical. For example, many application that analyze or visualize spatial data are capable of importing shapefiles.</p>
+<p>The following code chunk provides an example using the East Pilbara data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective: export Shapefiles</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Grant Coble-Neal</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>MB <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"MeshBlocks"</span>, <span class="st">"MB_2021_AUST_GDA2020.shp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MB_2021_AUST_GDA2020' from data source 
+  `C:\Users\COBLENG\Documents\R\AddressData\data\MeshBlocks\MB_2021_AUST_GDA2020.shp' 
+  using driver `ESRI Shapefile'
+replacing null geometries with empty geometries
+Simple feature collection with 368286 features and 19 fields (with 31 geometries empty)
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 96.81695 ymin: -43.7405 xmax: 167.998 ymax: -9.142163
+Geodetic CRS:  GDA2020</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>EastPilbara <span class="ot">&lt;-</span> MB <span class="sc">%&gt;%</span> <span class="fu">filter</span>(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  SA2_NAME21 <span class="sc">==</span> <span class="st">"East Pilbara"</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(EastPilbara, <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"EastPilbara.shp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Writing layer `EastPilbara' to data source 
+  `C:/Users/COBLENG/Documents/R/AddressData/data/EastPilbara.shp' using driver `ESRI Shapefile'
+Writing 105 features with 19 fields and geometry type Polygon.</code></pre>
+</div>
+</div>
+<p>The result are four files saved in the ‘data’ subdirectory named: - EastPilbara.dbf - EastPilbara.prj - EastPilbara.shp - EastPilbara.shx</p>
+<p>These are required to import the data into another spatial analysis application.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.dirs</span>(<span class="fu">here</span>(<span class="st">"data"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "C:/Users/COBLENG/Documents/R/AddressData/data"                                        
+ [2] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF"                                  
+ [3] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/Documents"                        
+ [4] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/Extras"                           
+ [5] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/Extras/GNAF_TableCreation_Scripts"
+ [6] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/Extras/GNAF_View_Scripts"         
+ [7] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/G-NAF AUGUST 2023"                
+ [8] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/G-NAF AUGUST 2023/Authority Code" 
+ [9] "C:/Users/COBLENG/Documents/R/AddressData/data/G-NAF/G-NAF AUGUST 2023/Standard"       
+[10] "C:/Users/COBLENG/Documents/R/AddressData/data/MeshBlocks"                             </code></pre>
+</div>
+</div>
 
 
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Step 3 (Export data subsets)</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-MeshBlocksAustralian2021" class="csl-entry" role="listitem">
 <span>“Mesh <span>Blocks</span> | <span>Australian Bureau</span> of <span>Statistics</span>.”</span> Wed, 06/10/2021 - 11:30. <span>Australian Bureau of Statistics</span>. <a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/main-structure-and-greater-capital-city-statistical-areas/mesh-blocks">https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/main-structure-and-greater-capital-city-statistical-areas/mesh-blocks</a>.
 </div>
